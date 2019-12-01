@@ -30,6 +30,7 @@ CorrSpecSaveInitial = 0       # Save correlation Amp and Phase spectra pictures 
 CorrSpecSaveCleaned = 0       # Save correlation Amp and Phase spectra pictures after cleaning (1 = yes, 0 = no) ?
 SpecterFileSaveSwitch = 1     # Save 1 immediate specter to TXT file? (1 = yes, 0 = no)
 ImmediateSpNo = 100           # Number of immediate specter to save to TXT file
+enable_survey_cleaning = 1    # Apply pulsar survey cleaning (1 = yes, 0 = no) ?
 
 ################################################################################
 #*******************************************************************************
@@ -53,6 +54,7 @@ from package_ra_data_processing.spectra_normalization import Normalization_dB
 from package_ra_data_files_formats.file_header_JDS import FileHeaderReaderJDS
 from package_ra_data_files_formats.FPGA_to_PC_array import FPGAtoPCarrayJDS
 from package_cleaning.simple_channel_clean import simple_channel_clean
+from package_survey_cleaning.survey_cleaning import survey_cleaning
 
 ################################################################################
 #*******************************************************************************
@@ -306,6 +308,9 @@ for fileNo in range (len(fileList)):   # loop by files
                 '''
 
 
+                # Apply Pulsar survey cleaning to the data
+                if enable_survey_cleaning and Mode == 1:
+                    Data_ChA = survey_cleaning(Data_ChA)
 
                 # *** Saving data to a long-term file ***
                 if (Mode == 1 or Mode == 2) and longFileSaveAch == 1:
