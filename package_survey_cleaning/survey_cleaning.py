@@ -1,7 +1,7 @@
 import numpy as np
-from erov import erov
-from launch_sumthr import launch_sumthr
-from patrol import patrol
+from .erov import erov
+from .launch_sumthr import launch_sumthr
+from .patrol import patrol
 
 
 def survey_cleaning(imdat):
@@ -22,8 +22,8 @@ def survey_cleaning(imdat):
     op = s_sk / m_sk
     op, st, mt = erov(op)
     w = np.where(abs(op - mt) < st*4.)[0]
-    if w:
-        med=np.median(imdat[w, ...])
+    if w.size:
+        med = np.median(imdat[w, ...])
     else:
         med = 0
         
@@ -36,3 +36,4 @@ def survey_cleaning(imdat):
     imdat, med, p, s_sk, m_sk = patrol(imdat, med, p, s_sk, m_sk)
     
     return imdat
+    # return p

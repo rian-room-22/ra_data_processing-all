@@ -12,7 +12,7 @@ def erov(op):
         m = m*(abs(m - sr) <= srkv * 3.)
         m_in = np.where(m != 0)[0]
         count = m_in.size
-        if m_in:
+        if count:
             m = m[m_in]
             sr = np.mean(m)
             ster = np.std(m)
